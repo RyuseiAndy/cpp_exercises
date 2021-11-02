@@ -1,5 +1,3 @@
-// ArrayStack.h
-
 #include <string>
 #include <iostream>
 
@@ -40,6 +38,7 @@ public:
 
     // Destructor:
     ~ArrayStack() {
+        delete[] _items;
         // COMPLETE
     }
 
