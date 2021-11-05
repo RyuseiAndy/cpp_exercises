@@ -34,7 +34,7 @@ int main(void)
 {
     try
     {
-        string test1 = "-1";
+        string test1 = "11";
         std::cout << stringToInt(test1) << endl;
     }
     catch (invalid_argument const &ex)
