@@ -31,7 +31,7 @@ public:
      * set _items to the null pointer, 
      */
 
-    explicit ArrayStack(int allocated_size) : _num_items(0),_allocated_size(allocated_size),_items(new double[0]){}
+    explicit ArrayStack(int allocated_size) : _num_items(0),_allocated_size(allocated_size),_items(items){}
     /* COMPLETE ... init _num_items to 0, 
      * pre-allocate memory for an array of size allocated_size
      * and make _items point to it */
