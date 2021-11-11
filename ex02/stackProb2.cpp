@@ -2,44 +2,52 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include <iostream>
+
 
 void printline(int);
 int i;
 
-int main(){
-    std::ifstream ifs( "data.txt" );
+int main(int argc, char* argv[]){
+    std::ifstream ifs( argv[1] );
     std::string str;
     Stack s;
     int line=0;
 
-    if (ifs.fail()) {
-        std::cerr << "File Open Error" << std::endl;
-        return -1;
-    }
-    while (getline(ifs, str)) {
-        if(str.length() > 0){
-            line = str.length();
-        }
-        if( str!="\n"){
-            s.push(str);
-        }   
-    }
-        setw(line);
+    if (!ifs)
+	{
+		cout << "Error! File can not be opened" << endl;
+		return 0;
+	}
+    cout << "Contents of the data.txt file\n" << endl;
 
-        for ( i = 0 ; i < line+1 ;i++){
+	while (getline(ifs, str))
+	{
+        cout << str << endl;
+        if(str.length()>0){
+            line=str.length();
+        }
+            s.push(str);
+    }
+    setw(line);
+
+    cout << "\nStacked data of the data.txt file\n" << endl;
+
+    for ( i = 0 ; i < line ;i++){
             cout << "-";
-            }
+        }
         std::cout<<std::endl;
 
     while (!s.empty())
     {
         std::cout << s.top() << std::endl;
         s.pop();
-        }
-        for ( i = 0 ; i < line+1 ;i++){
+    }
+    for ( i = 0 ; i < line ;i++){
             cout << "-";
-            }
+        }
         std::cout<<std::endl;
 
+    
   return 0;
 }
