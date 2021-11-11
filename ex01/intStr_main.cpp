@@ -1,11 +1,23 @@
 #include "intStr.h"
+#include <cstdlib> 
+#include <iostream>
 
-int main(void)
-{
-    //printf("%s\n",intToStr(30));
-    //printf("%d\n",strToInt("123"));
-    char *testIntVal = intToStr(123);
-    char *testStrVal = "123";
-    int r = strToInt(testStrVal);
-    free(testIntVal);
+int main(void) {
+  int i1 = 10;
+  char* c1 = intToStr(i1);
+  std::cout << c1 << std::endl;
+  free(c1);
+
+  char* c2 = (char*)"10";
+  int i2 = strToInt(c2);
+  std::cout << i2 << std::endl;
+
+  int i3 = -20;
+  char* c3 = intToStr(i3);
+  std::cout << c3 << std::endl;
+  free(c3);
+
+  char* c4 = (char*)"-20";
+  int i4 = strToInt(c4);
+  std::cout << i4 << std::endl;
 }

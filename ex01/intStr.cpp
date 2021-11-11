@@ -1,42 +1,60 @@
-char *intToStr(int intVal)
-{
-  int length = 0;
-  int tmpIntVal = intVal;
+#include <cstdlib>
+#include "intStr.h"
 
-  while (tmpIntVal >= 0.1)
-  {
-    length++;
-    tmpIntVal = tmpIntVal / 10;
-  }
-  char *ans = (char *)malloc(1 * length);
+char* intToStr(int num) {
+  char* s;
+  int digit = 0;
+  int dnum = num;
 
-  int arr[length];
-  int val;
-  for (int i = 0; i < length; i++)
-  {
-    arr[length - 1] = intVal % 10;
-    intVal = intVal / 10;
-  }
-  for (int i = length - 1; i >= 0; i--)
-  {
-    ans[i] = '0' + arr[i];
-  }
-  return ans;
-}
-
-int strToInt(char　*str)
-{
-    int num = 0;
-    int len = 0;
-    
-    while(*str != '\0'){
-        num += *str - 48;
-        num *= 10;
-        str++;
+    while(dnum != 0) {
+      dnum /= 10;
+      digit++;
     }
-    
-    num /= 10;
-    
-    return num;
+
+  if(num >= 0) {
+    s = (char*)malloc(sizeof(char) * (digit));
+
+    for(int i = digit-1 ; i >= 0 ; i--) {
+      s[i] = char('0' + num % 10);
+      num /= 10;
+    }
+  }
+  else {
+    digit++;
+    num *= -1;
+
+    s = (char*)malloc(sizeof(char) * (digit));
+
+    for(int i = digit-1 ; i >= 1 ; i--) {
+      s[i] = char('0' + num % 10);
+      num /= 10;
+    }
+    s[0] = '-';
+  }
+  return s;
 }
 
+int strToInt(char* s) {
+  int num, nowdig = 1;
+  int digit = 0;
+
+    while(s[digit]) {
+      digit++;
+    }
+
+
+  if(s[0] == '-') {
+    for(int i = digit-1 ; i >= 1 ; i--) {
+      num += (int)((s[i]-'0') * nowdig);
+      nowdig *= 10;
+    }
+    num *= -1;
+  }
+  else {
+    for(int i = digit-1 ; i >= 0 ; i--) {
+      num += (int)((s[i]-'0') * nowdig);
+      nowdig *= 10;
+    }
+  }
+  return num;
+}
