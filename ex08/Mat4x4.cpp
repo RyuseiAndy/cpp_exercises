@@ -1,6 +1,7 @@
 #include "Mat4x4.h"
 #include <iostream>
 
+
 Mat4x4::Mat4x4() {
     for(int i = 0; i < 4; i++){
         for(int j = 0; j < 4; j++){
@@ -50,7 +51,9 @@ Mat4x4 Mat4x4::operator-() const {
     Mat4x4 res;
     for(int i = 0; i < 4; i++){
         for(int j = 0; j < 4; j++){
+            if(_array[i][j]!=0){
             res._array[i][j] = -(this->_array[i][j]);
+            }
         }
     }
     return res;
@@ -79,7 +82,11 @@ Mat4x4& Mat4x4::operator+=(const Mat4x4& obj) {
 }
 
 Mat4x4& Mat4x4::operator-=(const Mat4x4& obj) {
-    *this += -obj;
+    for( int i=0 ; i < 4; ++i){
+        for(int j=0; j< 4; ++j){
+            _array[i][j]=_array[i][j]-obj._array[i][j];
+        }
+    }
     return *this;
 }
 
