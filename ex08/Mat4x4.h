@@ -25,7 +25,7 @@ public:
     bool operator==(const Mat4x4&) const;
     
 private:
-    double _array[4][4];
+    double array[4][4];
 
 };
 
