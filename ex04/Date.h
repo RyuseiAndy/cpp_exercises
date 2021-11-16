@@ -5,7 +5,7 @@ class Date {
 public:
   Date() {}
   void set(int m, int d, int y);
-  void print();
+  void print()const;
   int get_month() const;
   int get_day() const;
   int get_year() const;
