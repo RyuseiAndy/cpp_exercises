@@ -1,127 +1,118 @@
-#include "Mat4x4.h"
+//Mat4x4.cpp
+#include <cstring>
 #include <iostream>
+#include <cmath>
+#include "Mat4x4.h"
 
+#define MAT_SIZE 4
+
+using namespace std;
 
 Mat4x4::Mat4x4() {
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            if(i == j) array[i][j] = 1.0;
-            else array[i][j] = 0.0;
+    data[0][0] = 1.0;  data[0][1] = 0.0;  data[0][2] = 0.0; data[0][3] = 0.0;
+    data[1][0] = 0.0;  data[1][1] = 1.0;  data[1][2] = 0.0; data[1][3] = 0.0;
+    data[2][0] = 0.0;  data[2][1] = 0.0;  data[2][2] = 1.0; data[2][3] = 0.0;
+    data[3][0] = 0.0;  data[3][1] = 0.0;  data[3][2] = 0.0; data[3][3] = 1.0;
+    }
+
+Mat4x4::Mat4x4(const double coefficients[MAT_SIZE][MAT_SIZE]) {
+    for (int i = 0; i < MAT_SIZE; ++i) {
+        for (int j = 0; j < MAT_SIZE; ++j) {
+            data[i][j] = coefficients[i][j];
         }
     }
 }
 
-Mat4x4::Mat4x4(double n[4][4]) {
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            array[i][j] = n[i][j];
+// destructor
+Mat4x4::~Mat4x4() {}
+
+Mat4x4& Mat4x4::operator= (const Mat4x4& other) {
+    for (int i = 0; i < MAT_SIZE; ++i) {
+        for (int j = 0; j < MAT_SIZE; ++j) {
+            data[i][j] = other.data[i][j];
         }
     }
+    return *this;
 }
 
-Mat4x4::Mat4x4(const Mat4x4& obj) {
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            array[i][j] = obj.array[i][j];
+double& Mat4x4::operator() (int i, int j) {
+    return data[i][j];
+}
+
+double Mat4x4::operator() (int i, int j) const {
+    return data[i][j];
+}
+
+Mat4x4& Mat4x4::operator+= (const Mat4x4& other) {
+    for (int i = 0; i < MAT_SIZE; ++i) {
+        for (int j = 0; j < MAT_SIZE; ++j) {
+            data[i][j] = data[i][j] + other.data[i][j];
         }
     }
+    return *this;
 }
 
-Mat4x4& Mat4x4::operator=(const Mat4x4& obj) {
-    if(this != &obj) {
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 4; j++){
-                array[i][j] = obj.array[i][j];
+Mat4x4& Mat4x4::operator-= (const Mat4x4& other) {
+    for (int i = 0; i < MAT_SIZE; ++i) {
+        for (int j = 0; j < MAT_SIZE; ++j) {
+            data[i][j] = data[i][j] - other.data[i][j];
+        }
+    }
+    return *this;
+}
+
+Mat4x4& Mat4x4::operator*= (const Mat4x4& other) {
+    Mat4x4 c = *this;
+    for (int i = 0; i < MAT_SIZE; ++i) {
+        for (int j = 0; j < MAT_SIZE; ++j) {
+            data[i][j] = 0.0;
+            for (int s = 0; s < MAT_SIZE; ++s) {
+                data[i][j] += c.data[i][s] * other.data[s][j];
             }
         }
     }
     return *this;
 }
 
-Mat4x4 Mat4x4::operator+(const Mat4x4& obj) {
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            array[i][j] += obj.array[i][j];
-        }
-    }
-    return *this;
-}
-
-Mat4x4 Mat4x4::operator-() const {
-    Mat4x4 res;
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            if(array[i][j]!=0){
-            res.array[i][j] = -(this->array[i][j]);
+const Mat4x4 Mat4x4::operator- ()  {
+    Mat4x4 r;
+    for (int i = 0; i < MAT_SIZE; ++i) {
+        for (int j = 0; j < MAT_SIZE; ++j) {
+            if (data[i][j] != 0) {
+                r.data[i][j] = -data[i][j];
             }
         }
     }
-    return res;
+    return r.data;
 }
 
-Mat4x4 Mat4x4::operator*(const Mat4x4& obj) {
-    Mat4x4 temp;
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            temp.array[i][j] = 0.0;
-            for(int k = 0; k < 4; k++){
-                temp.array[i][j] += array[i][k]*obj.array[k][j];
-            }
-        }
-    }
-    return temp;
+Mat4x4 operator+ (const Mat4x4& otherA, const Mat4x4& otherB) {
+    return Mat4x4(otherA) += otherB;
 }
 
-Mat4x4& Mat4x4::operator+=(const Mat4x4& obj) {
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            array[i][j] += obj.array[i][j];
-        }
-    }
-    return *this;
+Mat4x4 operator- (const Mat4x4& otherA, const Mat4x4& otherB) {
+    return Mat4x4(otherA) -= otherB;
 }
 
-Mat4x4& Mat4x4::operator-=(const Mat4x4& obj) {
-    for( int i=0 ; i < 4; ++i){
-        for(int j=0; j< 4; ++j){
-            array[i][j]=array[i][j]-obj.array[i][j];
-        }
-    }
-    return *this;
+Mat4x4 operator* (const Mat4x4& otherA, const Mat4x4& otherB) {
+    return Mat4x4(otherA) *= otherB;
 }
 
-Mat4x4& Mat4x4::operator*=(const Mat4x4& obj) {
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            array[i][j] *= obj.array[i][j];
-        }
-    }
-    return *this;
-}
-
-std::ostream& operator<<(std::ostream& os, const Mat4x4& obj) {
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            os << obj.array[i][j] << " ";
-        }
-        os << std::endl;
-    }
-    return os;
-}
-
-double Mat4x4::operator()(int i, int j) const {
-    return array[i][j];
-}
-
-bool Mat4x4::operator==(const Mat4x4& obj) const {
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            if(array[i][j] != obj.array[i][j]) return false;
+bool operator== (const Mat4x4& otherA, const Mat4x4& otherB) {
+    for (int i = 0; i < MAT_SIZE; ++i) {
+        for (int j = 0; j < MAT_SIZE; ++j) {
+            if (otherA(i, j) != otherB(i, j)) return false;
         }
     }
     return true;
 }
 
-Mat4x4::~Mat4x4() {
-
+std::ostream& operator<< (std::ostream& os, const Mat4x4& c) {
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            os << c.data[i][j] << " ";
+        }
+        os << endl;
+    }
+    return os;
 }
