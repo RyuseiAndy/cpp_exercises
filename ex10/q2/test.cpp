@@ -49,9 +49,8 @@ double evaluateFP(string data) {
 
 
 int main() {
-    string data1 = "( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )";
-    string data2  = "( ( ( 2.0 * ( 3.0 - 1.0 ) ) - 5.0 ) * 3.0 )";
-    string data3 = "( 1 + ( ( 1 + 1 ) * ( 1 * 1 ) ) )";
+    string data1 = "3 + 5 * 6 - 7 * ( 8 + 5 )";
+    string data2  = "25.0 * 12.0 / 5.0 - 8.0";
 
     std::cout << fixed << setprecision(1);
 
@@ -59,6 +58,5 @@ int main() {
     cout << "output: " << evaluateFP(data1) << endl;
     cout << "Input: " << data2 << endl;
     cout << "output: " << evaluateFP(data2) << endl;
-    cout << "Input: " << data3 << endl;
-    cout << "output: " << evaluateFP(data3) << endl;
+    
 }
