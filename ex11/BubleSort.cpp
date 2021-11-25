@@ -2,8 +2,8 @@
 #include <vector>
 
 namespace PL4{
-  template <class Ran>
-  void sort(Ran begin, Ran end){
+  template <class FwdIt>
+  void sort(FwdIt begin, FwdIt end){
       for(auto i = begin; i != end - 1; i++){
           for(auto j = i + 1; j != end; j++){
               if(i < j) 
@@ -22,11 +22,10 @@ namespace PL4{
 }
 
 int main(){
-  std::vector<int> v{3,1,4,8}
-  int i;
+  std::vector<int> v{3,1,4,8};
 
   sort(v.begin(),v.end());
-  for(i = 0; i < 5 ; i++){
+  for(int i = 0; i < 5 ; i++){
     std::cout << v[i] << std::endl;
   }
   return 0;
