@@ -22,7 +22,7 @@ namespace PL4{
 }
 
 int main(){
-  std::vector<int> v{3,1,4,8};
+  std::vector<int> v{4, 6, 5, 3, 9};
 
   sort(v.begin(),v.end());
   for(int i = 0; i < 5 ; i++){
