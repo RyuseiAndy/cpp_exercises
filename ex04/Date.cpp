@@ -7,30 +7,70 @@ void Date::set(int m, int d, int y){
     year = y;
 }
 
-void Date::print() const{
+const void Date::print(){
     std::cout<<"month ->"<<month<<std::endl;
     std::cout<<"day ->"<<day<<std::endl;
     std::cout<<"year ->"<<year<<std::endl;
 }
 
-int Date::get_month()const{
+const int Date::get_month(){
     return month;
 }
 
-int Date::get_year()const{
+const int Date::get_year(){
     return year;
 }
 
-int Date::get_day()const{
+const int Date::get_day(){
     return day;
 }
 
+bool Date::uruu(int year){
+    if(year%4==0&&year%100!=0||year%400==0){
+        return true; 
+    }else{
+        return false;
+    }
+}
+
 void Date::inc_day(){
-    day++;
+
+day++;
+    if (uruu(year)==true &&month==2){
+        if(day>=28){
+            day=1;
+        }
+        
+    }
+    else if (uruu(year)==false &&month==2){ 
+        if(day>=29){
+            day=1;
+        }
+    }
+    else if(month==4||month==6||month==9||month==11){
+        if(day>=30){
+            day=1;
+        }
+    }
+    else{
+       if(day>=31){
+           day=1;
+       }
+    else{
+        day++;
+    }
+      
+    }
+    
 }
 
 void Date::inc_month() {
-    month++;
+    if(1< month && month<12){
+        month++;
+    }
+    else {
+        month =1;
+    }
 }
 
 void Date::inc_year() {
