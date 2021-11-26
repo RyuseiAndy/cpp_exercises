@@ -1,35 +1,62 @@
 #include <iostream>
-#include <cstdlib>
 #include <stack>
 #include <string>
 #include <sstream>
+#include <iomanip>
 
-double EvaluationFP(std::string str){
-  std::stack<double> s1;
-  double a,b;
-  std::stringstream x(str);
-  std::string str1;
-  while(getline(x,str,' ')){
-    if((str1[0] == '+' || str1[0] == '-' || str1[0] == '*' || str1[0] == '/') && str1.length() <= 1){
-      a = s1.top();
-      s1.pop();
-      b = s1.top();
-      s1.pop();
+using namespace std;
 
-      if(str1[0] == '+') s1.push(b+a);
-      if(str1[0] == '-') s1.push(b-a);
-      if(str1[0] == '*') s1.push(b*a);
-      if(str1[0] == '/') s1.push(b/a);
+double evaluateFP(string data) {
+    stack<double> operand;
+    stack<string> operat;
+    stringstream ss(data);
+    string d;
+
+    while(ss >> d) {
+        if(d == "+" || d == "-" || d == "*" || d == "/"){
+            operat.push(d);
+        }
+        else if(d == "(" ) {
+        }
+        else if(d == ")" ) {
+            double a1 = operand.top();
+            operand.pop();
+            double a2 = operand.top();
+            operand.pop();
+            string a3 = operat.top();
+            if(a3 == "+") {
+                operat.pop();
+                double b1 = a2 + a1;
+                operand.push(b1);
+            } else if(a3 == "-") {
+                operat.pop();
+                double b2 = a2 - a1;
+                operand.push(b2);
+            } else if(a3 == "*") {
+                operat.pop();
+                double b3 = a2 * a1;
+                operand.push(b3);
+            } else if(a3 == "/") {
+                operat.pop();
+                double b4 = a1 / a2;
+                operand.push(b4);
+            }
+        }
+        else operand.push(stod(d));
     }
-    else s1.push(atoi(str1.c_str()));
-  }
-  return  s1.top();
+    return operand.top();
 }
 
-int main(){
-  std::cout << "input:( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )" << std::endl;
-  std::string str1 = "( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )";
 
-  std::cout << "Output:"<<EvaluationFP(str1) << std::endl;
-  return 0;
+int main() {
+    string data1 = "( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )";
+    string data2  = "( ( ( 2.0 * ( 3.0 - 1.0 ) ) - 5.0 ) * 3.0 ) ";
+
+    std::cout << fixed << setprecision(1);
+
+    cout << "Input: " << data1 << endl;
+    cout << "output: " << evaluateFP(data1) << endl;
+    cout << "Input: " << data2 << endl;
+    cout << "output: " << evaluateFP(data2) << endl;
+    
 }
