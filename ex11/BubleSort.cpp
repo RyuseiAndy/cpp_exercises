@@ -27,6 +27,7 @@ int main(){
   sort(v.begin(),v.end());
   for(int i = 0; i < 5 ; i++){
     std::cout << v[i] << std::endl;
+
   }
   return 0;
 }
