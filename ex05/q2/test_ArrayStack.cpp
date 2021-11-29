@@ -13,13 +13,6 @@ int main(void) {
       stack1.push(i);
     }
 
-    /*double length = stack1.size();
-        for(int i=0; i<length; i++){
-            if(!stack1.empty()){
-              stack1.pop();
-            }
-        }
-    */
 // Create another instance of ArrayStack named stack2
 //   using the other constructor, specify an original size of 5
 // Push 1.0, 2.0, ..., 10.0 in this stack
@@ -29,13 +22,7 @@ int main(void) {
       stack1.push(j);
     }
 
-    /*double length = stack2.size();
-        for(int i=0; i<length; i++){
-            if(!stack1.empty()){
-                stack1.pop();
-            }
-        }
-*/
+    
   // Copy
     ArrayStack stack3(stack1);
     ArrayStack stack4 = stack2;

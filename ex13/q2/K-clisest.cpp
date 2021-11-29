@@ -47,20 +47,6 @@ double compute_median2(std::vector<double> v) {
     return v[v.size()/2];
 }
 
-std::vector<int> compute_k_closest2(std::vector<double> v, int k) {
-    int med = compute_median2(v);
-    auto c = [=](int x, int y){
-        return abs(x-med) < abs(y-med);
-    };
-
-    std::vector<int> ans;
-    for(int i = 0; i < k; i++){
-        std::nth_element(v.begin(), v.begin()+i, v.end(), c);
-        ans.push_back(v[i]);
-    }
-    return ans;
-}
-
 int main() {
     std::vector<double> array = {7.0,14.0,10.0,12.0,2.0,11.0,29.0,3.0,4.0};
     std::vector<int> output, output2;
@@ -68,12 +54,6 @@ int main() {
     output = compute_k_closest(array, 3);
     cout << "output1" << endl;
     for(auto e : output){
-        std::cout << e << std::endl;
-    }
-
-    output2 = compute_k_closest2(array, 3);
-    cout << "output2" << endl;
-    for(auto e : output2){
         std::cout << e << std::endl;
     }
 
