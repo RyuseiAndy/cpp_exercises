@@ -3,7 +3,7 @@
 
 int main(void) {
   Date d;
-  d.set(2, 27, 2001);
+  d.set(12, 31, 2001);
   //uruu(2001);
   d.print();
 
