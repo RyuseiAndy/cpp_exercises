@@ -31,7 +31,7 @@ void Date::inc_day(){
         day=1;
     }
     if(month==1||month==3||month==5||month==8||month==7||month==10||month==12){
-        if(day==31){
+        if(day==31||day ==32){
             day=1;
         }
     }
