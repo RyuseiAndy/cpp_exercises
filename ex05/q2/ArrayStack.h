@@ -7,14 +7,14 @@
 #define ARRAY_STACK_H
 
 class ArrayStack {
-    private:
+private:
     int _num_items; // number of items in the stack
     double* _items; // stack items
     int _allocated_size; // size of memory allocated
 
     void resize(int max_size) {
         if (max_size==0) max_size++;
-        
+
         // Move stack to a new array of size max
         _allocated_size = max_size;
         double* temp = new double[max_size];
@@ -27,36 +27,50 @@ class ArrayStack {
     }
 
 public:
-    // Constructors:1
-    ArrayStack() : _num_items(0),_allocated_size(0),_items(nullptr){}
-    /* COMPLETE ... init _num_items to 0, _allocated_size to 0, and
+    // Constructors:
+        /* COMPLETE ... init _num_items to 0, _allocated_size to 0, and
      * set _items to the null pointer, 
      */
-    // Constructors:2
-    explicit ArrayStack(int allocated_size) : _num_items(0),_allocated_size(allocated_size),_items(new double[allocated_size]){}
+    ArrayStack() : _num_items(0),_items(nullptr),_allocated_size(0) {}
+    
+    ArrayStack(const ArrayStack& a) {
+        _num_items = a._num_items;
+        _allocated_size = a._allocated_size;
+        double* tmp = new double[a._allocated_size];
+        for(int i = 0; i < a._num_items; i++){
+            tmp[i] = a._items[i];
+        }
+        _items = tmp;
+        std::cout << "Copy Constructor" << std::endl;
+    }
+    
+    ArrayStack& operator=(const ArrayStack& b){
+        _num_items = b._num_items;
+        _allocated_size = b._allocated_size;
+        double* tmp = new double[b._allocated_size];
+        for(int i = 0; i < b._num_items; i++){
+            tmp[i] = b._items[i];
+        }
+        delete[] _items;
+        _items = tmp;
+        std::cout << "Assignment Operator" << std::endl;
+        return *this;
+    }
+
+    explicit ArrayStack(int allocated_size) {
+        _num_items = 0;
+        double* items = new double[allocated_size];
+        _allocated_size = allocated_size;
+        _items = items;
     /* COMPLETE ... init _num_items to 0, 
      * pre-allocate memory for an array of size allocated_size
      * and make _items point to it */
-    // Constructors:3,4
-    ArrayStack(const ArrayStack& arr1) :
-        _num_items(arr1._num_items),
-        _allocated_size(arr1._allocated_size), 
-        _items(new double)
-        {}
+    }
 
-    // Constructors:5,6
-    ArrayStack& operator=(const ArrayStack& arr2){
-                delete[] _items;
-                _num_items = arr2._num_items;
-                _allocated_size = arr2._allocated_size;
-                _items = new double[_allocated_size];
-                *_items = *arr2._items;
-                return *this;
-            }
     // Destructor:
     ~ArrayStack() {
-        // COMPLETE
         delete[] _items;
+        // COMPLETE
     }
 
     void push(double item) {

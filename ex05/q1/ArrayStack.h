@@ -5,14 +5,14 @@
 #define ARRAY_STACK_H
 
 class ArrayStack {
-    private:
+private:
     int _num_items; // number of items in the stack
     double* _items; // stack items
     int _allocated_size; // size of memory allocated
 
     void resize(int max_size) {
         if (max_size==0) max_size++;
-        
+
         // Move stack to a new array of size max
         _allocated_size = max_size;
         double* temp = new double[max_size];
@@ -26,15 +26,20 @@ class ArrayStack {
 
 public:
     // Constructors:
-    ArrayStack() :_num_items(0),_allocated_size(0),_items(nullptr){}
+    ArrayStack() : _num_items(0),_items(nullptr),_allocated_size(0) {}
     /* COMPLETE ... init _num_items to 0, _allocated_size to 0, and
      * set _items to the null pointer, 
      */
 
-    explicit ArrayStack(int allocated_size) : _num_items(0),_allocated_size(allocated_size),_items(new double[allocated_size]){}
+    explicit ArrayStack(int allocated_size) {
+        _num_items = 0;
+        double* items = new double[allocated_size];
+        _allocated_size = allocated_size;
+        _items = items;
     /* COMPLETE ... init _num_items to 0, 
      * pre-allocate memory for an array of size allocated_size
      * and make _items point to it */
+    }
 
     // Destructor:
     ~ArrayStack() {
