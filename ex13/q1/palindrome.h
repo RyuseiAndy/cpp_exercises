@@ -3,46 +3,26 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+using namespace std;
 
-bool isPalindrome(std::string& s) {
-    std::string str = s;
+bool isPalindrome(string data) {
+    string d = data;
 
-    transform(str.begin(), str.end(), str.begin(),
+    transform(d.begin(), d.end(), d.begin(),
         [](unsigned char c) { return tolower(c); });
 
-    
-    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+    d.erase(remove(d.begin(), d.end(), ' '), d.end());
+    d.erase(remove(d.begin(), d.end(), ','), d.end());
+    d.erase(remove(d.begin(), d.end(), '\''), d.end());
 
-    str.erase(remove(str.begin(), str.end(), ','), str.end());
-
-    str.erase(remove(str.begin(), str.end(), '\''), str.end());
-    
-    
-    if (equal(str.begin(), str.begin() + str.size() / 2, str.rbegin())) {
+    if (equal(d.begin(), d.begin() + d.size() / 2, d.rbegin())) {
+        cout << data << ": palindrome" << endl;
         return true;
     }
     else {
+        cout << data << ": Not palindrome" << endl;
         return false;
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #endif
+
