@@ -1,33 +1,26 @@
 #ifndef MAT4X4_H
 #define MAT4X4_H
 #include <iostream>
+#include <cmath>
+#include <cstring>
+#define MAT_SIZE 4
 
 template<class T, int N>
 class Mat4x4 {
 public:
     Mat4x4() {
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                if(i == j) array[i][j] = 1.0;
-                else array[i][j] = 0.0;
-            }
-        }
+    array[0][0] = 1.0;  array[0][1] = 0.0;  array[0][2] = 0.0; array[0][3] = 0.0;
+    array[1][0] = 0.0;  array[1][1] = 1.0;  array[1][2] = 0.0; array[1][3] = 0.0;
+    array[2][0] = 0.0;  array[2][1] = 0.0;  array[2][2] = 1.0; array[2][3] = 0.0;
+    array[3][0] = 0.0;  array[3][1] = 0.0;  array[3][2] = 0.0; array[3][3] = 1.0;
     }
 
-    Mat4x4(T matrix[N][N]) {
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                array[i][j] = matrix[i][j];
-            }
+    Mat4x4(const double coefficients[MAT_SIZE][MAT_SIZE]) {
+    for (int i = 0; i < MAT_SIZE; ++i) {
+        for (int j = 0; j < MAT_SIZE; ++j) {
+            array[i][j] = coefficients[i][j];
         }
     }
-
-    Mat4x4(const Mat4x4& obj) {
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                array[i][j] = obj.array[i][j];
-            }
-        }
     }
 
     ~Mat4x4() {
