@@ -2,23 +2,16 @@
 #include <vector>
 
 namespace PL4{
-  template <class FwdIt>
-  void sort(FwdIt begin, FwdIt end){
-      for(auto i = begin; i != end - 1; i++){
-          for(auto j = i + 1; j != end; j++){
-              if(i < j) 
-              std::swap(i, j);
+    template <class FwdIt>
+    void sort(FwdIt begin, FwdIt end) {
+        for(auto i=begin; i!=end; ++i){
+            for(auto j=begin; j<i; ++j){
+                if(*i < *j){
+                    iter_swap(i, j);
+                }
             }
-          }
+        }
     }
-  void swap (int x, int y) {
-  int temp;
-
-  temp = x;
-  x = y;
-  y = temp;
-  }
-
 }
 
 int main(){
