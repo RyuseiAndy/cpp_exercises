@@ -3,14 +3,23 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <map>
 
 using namespace std;
 
-double evaluateFP(string data) {
+double evaluate(string data) {
     stack<double> operand;
     stack<string> operat;
     stringstream ss(data);
     string d;
+
+    map<string, int> judge;
+    judge["+"] = 1;
+    judge["-"] = 1;
+    judge["*"] = 2;
+    judge["/"] = 2;
+    judge["("] = 0;
+    judge[")"] = 0;
 
     while(ss >> d) {
         if(d == "+" || d == "-" || d == "*" || d == "/"){
@@ -47,16 +56,17 @@ double evaluateFP(string data) {
     return operand.top();
 }
 
-
 int main() {
-    string data1 = "( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )";
-    string data2  = "( ( ( 2.0 * ( 3.0 - 1.0 ) ) - 5.0 ) * 3.0 ) ";
+    string data1 = "3 + 5 * 6 - 7 * ( 8 + 5 )";
+    string data2  = "25.0 * 12.0 / 5.0 - 8.0";
+    string data3 = "1 + 2 * 3 - 4 * ( 5 + 6 )";
 
-    std::cout << fixed << setprecision(1);
+    cout << fixed << setprecision(1);
 
     cout << "Input: " << data1 << endl;
-    cout << "output: " << evaluateFP(data1) << endl;
+    cout << "output: " << evaluate(data1) << endl;
     cout << "Input: " << data2 << endl;
-    cout << "output: " << evaluateFP(data2) << endl;
-    
+    cout << "output: " << evaluate(data2) << endl;
+    cout << "Input: " << data3 << endl;
+    cout << "output: " << evaluate(data3) << endl;
 }
