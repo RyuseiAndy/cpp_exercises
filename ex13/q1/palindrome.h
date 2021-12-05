@@ -3,26 +3,24 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <cctype>
+
 using namespace std;
 
-bool isPalindrome(string data) {
-    string d = data;
+bool isPalindrome(string s) {
+    string tmp = s;
+    transform(tmp.begin(), tmp.end(), tmp.begin(), ::tolower);
+              auto fn_cond = [](char c){
+                  return !isalpha(c);
+              };
 
-    transform(d.begin(), d.end(), d.begin(),
-        [](unsigned char c) { return tolower(c); });
+    tmp.erase(remove_if(tmp.begin(), tmp.end(), fn_cond), tmp.end());
 
-    d.erase(remove(d.begin(), d.end(), ' '), d.end());
-    d.erase(remove(d.begin(), d.end(), ','), d.end());
-    d.erase(remove(d.begin(), d.end(), '\''), d.end());
+    string reverse = tmp;
+    reverse_copy(tmp.begin(), tmp.end(), reverse.begin());
 
-    if (equal(d.begin(), d.begin() + d.size() / 2, d.rbegin())) {
-        cout << data << ": palindrome" << endl;
-        return true;
-    }
-    else {
-        cout << data << ": Not palindrome" << endl;
-        return false;
-    }
+    return tmp == reverse;
 }
+
 #endif
 
