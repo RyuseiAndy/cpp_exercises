@@ -13,14 +13,6 @@ double evaluate(string data) {
     stringstream ss(data);
     string d;
 
-    map<string, int> judge;
-    judge["+"] = 1;
-    judge["-"] = 1;
-    judge["*"] = 2;
-    judge["/"] = 2;
-    judge["("] = 0;
-    judge[")"] = 0;
-
     while(ss >> d) {
         if(d == "+" || d == "-" || d == "*" || d == "/"){
             operat.push(d);
