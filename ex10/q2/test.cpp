@@ -1,62 +1,179 @@
 #include <iostream>
+#include <cstring>
 #include <stack>
-#include <string>
 #include <sstream>
+#include <vector>
 #include <iomanip>
+#include <map>
 
 using namespace std;
 
-double evaluateFP(string data) {
-    stack<double> operand;
-    stack<string> operat;
-    stringstream ss(data);
-    string d;
+double twostack(const string str){
+    double x, y, z;
+    char flag;
+    stringstream sstr(str);
+    stack<double> num;
+    stack<char> ope;
+    string st;
 
-    while(ss >> d) {
-        if(d == "+" || d == "-" || d == "*" || d == "/"){
-            operat.push(d);
+    map<char, int> judg; 
+    judg['+'] = 1;
+    judg['-'] = 1;
+    judg['*'] = 2;
+    judg['/'] = 2;
+    judg['('] = 0;
+    judg[')'] = 0;
+
+    ope.push('\0');
+
+    while(sstr >> st){
+
+        if(st == "+" || st == "-" || st == "*" || st == "/"){
+            flag = *st.c_str();
+            ope.push(flag);
+
+            continue;
         }
-        else if(d == "(" ) {
+        else if(st == "("){
+            continue;
+           
         }
-        else if(d == ")" ) {
-            double a1 = operand.top();
-            operand.pop();
-            double a2 = operand.top();
-            operand.pop();
-            string a3 = operat.top();
-            if(a3 == "+") {
-                operat.pop();
-                double b1 = a2 + a1;
-                operand.push(b1);
-            } else if(a3 == "-") {
-                operat.pop();
-                double b2 = a2 - a1;
-                operand.push(b2);
-            } else if(a3 == "*") {
-                operat.pop();
-                double b3 = a2 * a1;
-                operand.push(b3);
-            } else if(a3 == "/") {
-                operat.pop();
-                double b4 = a1 / a2;
-                operand.push(b4);
+        else if(st == ")"){
+            if(ope.top() == '+'){
+                ope.pop();
+               
+                y = num.top();
+                num.pop();
+                x = num.top();
+                num.pop();
+                num.push(x + y);
             }
+            else if(ope.top() == '-'){
+                ope.pop();
+                
+                y = num.top();
+                num.pop();
+                x = num.top();
+                num.pop();
+                num.push(x - y);
+            }
+            else if(ope.top() == '*'){
+                ope.pop();
+               
+                y = num.top();
+                num.pop();
+                x = num.top();
+                num.pop();
+                num.push(x * y);
+            }
+            else if(ope.top() == '/'){
+                ope.pop();
+                
+                y = num.top();
+                num.pop();
+                x = num.top();
+                num.pop();
+                num.push(x / y);
+            }
+            continue;
+
         }
-        else operand.push(stod(d));
+        else{
+            num.push(stod(st));
+            continue;
+        }
     }
-    return operand.top();
+
+
+
+    while(ope.top() != '\0'){
+        if(judg[ope.top()] == 2){
+            if(ope.top() == '*'){
+                ope.pop();
+               
+                y = num.top();
+                num.pop();
+                x = num.top();
+                num.pop();
+                num.push(x * y);
+            }
+            else if(ope.top() == '/'){
+                ope.pop();
+                
+                y = num.top();
+                num.pop();
+                x = num.top();
+                num.pop();
+                num.push(x / y);
+            }
+            
+        }
+        else if(judg[ope.top()] == 1){
+            flag = ope.top();
+            ope.pop();
+            if(judg[ope.top()] == 1 || ope.top() == '\0'){
+                if(flag == '+'){
+                    y = num.top();
+                    num.pop();
+                    x = num.top();
+                    num.pop();
+                    num.push(x + y);
+                }
+                else if(flag == '-'){
+                    y = num.top();
+                    num.pop();
+                    x = num.top();
+                    num.pop();
+                    num.push(x - y);
+                }
+            }
+            else if(judg[ope.top()] == 2){
+                z = num.top();
+                num.pop();
+                if(ope.top() == '*'){
+                    ope.pop();
+                    ope.push(flag);
+                    y = num.top();
+                    num.pop();
+                    x = num.top();
+                    num.pop();
+                    num.push(x * y);
+                    num.push(z);
+                    continue;
+                }
+                else if(ope.top() == '/'){
+                    ope.pop();
+                    ope.push(flag);
+                    y = num.top();
+                    num.pop();
+                    x = num.top();
+                    num.pop();
+                    num.push(x / y);
+                    num.push(z);
+                    continue;
+                }
+
+            }
+            continue;
+        }
+
+    }
+
+    return num.top();
 }
 
-
-int main() {
-    string data1 = "3 + 5 * 6 - 7 * ( 8 + 5 )";
-    string data2  = "25.0 * 12.0 / 5.0 - 8.0";
-
-    std::cout << fixed << setprecision(1);
-
-    cout << "Input: " << data1 << endl;
-    cout << "output: " << evaluateFP(data1) << endl;
-    cout << "Input: " << data2 << endl;
-    cout << "output: " << evaluateFP(data2) << endl;
+int main(){
+    string str1 = "3 + 5 * 6 - 7 * ( 8 + 5 )";
+    string str2 = "25.0 * 12.0 / 5.0 - 8.0";
     
+    cout <<  fixed << setprecision(1);
+
+    cout << "Input: " << str1 << endl;
+    cout << "Output: "<< twostack(str1) << endl;
+
+    cout << "Input: " << str2 << endl;
+    cout << "Output: "<< twostack(str2) << endl;
+
+    return 0;
+
 }
