@@ -20,27 +20,27 @@ double evaluate(string data) {
         else if(x == "(" ) {
         }
         else if(x == ")" ) {
-            double a1 = operand.top();
+            double y1 = operand.top();
             operand.pop();
-            double a2 = operand.top();
+            double y2 = operand.top();
             operand.pop();
-            string a3 = opetating.top();
-            if(a3 == "+") {
+            string y3 = opetating.top();
+            if(y3 == "+") {
                 opetating.pop();
-                double b1 = a2 + a1;
-                operand.push(b1);
-            } else if(a3 == "-") {
+                double add = y2 + y1;
+                operand.push(add);
+            } else if(y3 == "-") {
                 opetating.pop();
-                double b2 = a2 - a1;
-                operand.push(b2);
-            } else if(a3 == "*") {
+                double sum = y2 - y1;
+                operand.push(sum);
+            } else if(y3 == "*") {
                 opetating.pop();
-                double b3 = a2 * a1;
-                operand.push(b3);
-            } else if(a3 == "/") {
+                double mat = y2 * y1;
+                operand.push(mat);
+            } else if(y3 == "/") {
                 opetating.pop();
-                double b4 = a1 / a2;
-                operand.push(b4);
+                double div = y1 / y2;
+                operand.push(div);
             }
         }
         else operand.push(stod(x));
